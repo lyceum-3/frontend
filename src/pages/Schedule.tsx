@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from "../components/UI/Button";
 
 function Schedule() {
     const nav = useNavigate();
 
     return (
-        <div>
+        <div style={{ textAlign: "center", marginTop: "80px" }}>
             <h1>Hello, Schedule!</h1>
-            <button onClick={() => nav("/")}>Back</button>
+            <Button text="To home" onClick={() => nav("/")} />
         </div>
     )
 }

@@ -16,8 +16,14 @@ const Button: FC<Props> = ({ text, onClick }) => {
                 cursor: "pointer",
                 fontWeight: "bold",
                 background: "#4f46e5",
-                color: "white"
+                color: "white",
+                fontSize: "14px",
+                width: "100%",
+                transition: "background 0.2s",
+                marginTop: "10px"
             }}
+            onMouseEnter={(e) => e.currentTarget.style.background = "#4338ca"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "#4f46e5"}
         >
             {text}
         </button>

@@ -26,6 +26,7 @@ function Home() {
         <Card>
             <Title title={getGreetings()}/>
             <Button text = "Розклад" onClick={() => {nav("/schedule")}} />
+            <Button text="Адмін панель" onClick={() => {nav("/login")}} />
         </Card>
     )
 }

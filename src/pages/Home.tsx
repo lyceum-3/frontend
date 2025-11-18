@@ -25,8 +25,8 @@ function Home() {
     return (
         <Card>
             <Title title={getGreetings()}/>
-            <Button text = "Розклад" onClick={() => {nav("/schedule")}} />
-            <Button text="Адмін панель" onClick={() => {nav("/login")}} />
+            <Button text="Розклад" onClick={() => {nav("/schedule")}} />
+            <Button text="Адмін панель" onClick={() => {nav("/admin")}} />
         </Card>
     )
 }

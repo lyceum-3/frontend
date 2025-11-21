@@ -8,14 +8,9 @@ import Title from "../components/UI/Title";
 import Button from "../components/UI/Button";
 import Subtitle from "../components/UI/Subtitle";
 import Paragraph from "../components/UI/Paragraph";
+import { Event } from "../types/Event";
 import "./Calendar.css";
-
-interface Event {
-    date: string; // yyyy-mm-dd
-    title: string;
-    time?: string;
-    note?: string;
-}
+import fetchEvents from "../services/eventsService";
 
 interface SubCardProps {
     label: string;
@@ -26,16 +21,19 @@ interface EventComponentProps {
     event: Event;
 }
 
-const events: Event[] = [
-    { date: "2025-11-21", title: "День Гідності та Свободи" },
-    { date: "2025-12-01", title: "Ярмарка", note: "Ярмарка на підтримку ЗСУ" },
-    { date: "2025-12-05", title: "Дискотека", time: "6-7 уроки", note: "Українське диско" },
-];
-
 function Events() {
     const [value, setValue] = React.useState(new Date());
+    const [events, setEvents] = React.useState<Event[]>([]);
+    const [loading, setLoading] = React.useState(true);
 
     const nav = useNavigate();
+
+    React.useEffect(() => {
+        fetchEvents()
+            .then(fetched => setEvents(fetched))
+            .catch(error => alert(error instanceof Error ? error.message : error))
+            .finally(() => setLoading(false));
+    }, []);
 
     const formatDate = (date: Date) => {
         const year = date.getFullYear();
@@ -56,7 +54,7 @@ function Events() {
     const EventComponent: React.FC<EventComponentProps> = ({ event }) => {
         return (
             <Card margin="20px auto">
-                <SubCardComponent label="Назва" text={event.title} />
+                <SubCardComponent label="Назва" text={event.name} />
                 <div style={{marginTop: "20px"}} />
                 <SubCardComponent label="Час" text={event.time} />
                 <div style={{marginTop: "20px"}} />
@@ -80,7 +78,11 @@ function Events() {
             <div style={{textAlign:"center", marginTop: "30px"}}>
                 <Subtitle>Події на {formatDate(value)}</Subtitle>
             </div>
-            {todaysEvents.length > 0 ? (
+            {loading ? (
+                <div style={{textAlign: "center"}}>
+                    <Paragraph>Завантаження...</Paragraph>
+                </div>
+            ) : todaysEvents.length > 0 ? (
                 <div>
                     {todaysEvents.map((ev) => (
                         <EventComponent event={ev} />

@@ -16,6 +16,7 @@ function AdminDashboard() {
     return (
         <div>
             <h1>Hello, Admin</h1>
+            <button onClick={() => nav("/")}>Home</button>
             <button onClick={handleLogOut}>Log out</button>
         </div>
     )

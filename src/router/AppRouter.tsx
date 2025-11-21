@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Schedule from "../pages/Schedule";
 import Login from "../pages/Login";
 import Admin from "../pages/Admin";
+import Events from "../pages/Events";
 import ProtectedRoute from "./ProtectedRoute";
 
 const AppRouter = () => {
@@ -17,6 +18,7 @@ const AppRouter = () => {
                         <Admin />
                     </ProtectedRoute>
                 } />
+                <Route path="/events" element={<Events />}></Route>
             </Routes>
         </BrowserRouter>
     );

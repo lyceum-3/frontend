@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Admin() {
+function AdminDashboard() {
     const nav = useNavigate();
 
     function handleLogOut() {
@@ -21,4 +21,4 @@ function Admin() {
     )
 }
 
-export default Admin;
+export default AdminDashboard;

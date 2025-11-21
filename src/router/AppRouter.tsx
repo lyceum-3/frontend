@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Schedule from "../pages/Schedule";
 import Login from "../pages/Login";
-import Admin from "../pages/Admin";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 import Events from "../pages/Events";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -15,7 +15,7 @@ const AppRouter = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin" element={
                     <ProtectedRoute>
-                        <Admin />
+                        <AdminDashboard />
                     </ProtectedRoute>
                 } />
                 <Route path="/events" element={<Events />}></Route>

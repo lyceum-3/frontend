@@ -8,7 +8,7 @@ import Title from "../components/UI/Title";
 import Button from "../components/UI/Button";
 import Subtitle from "../components/UI/Subtitle";
 import Paragraph from "../components/UI/Paragraph";
-//import "./Calendar.css";
+import "./Calendar.css";
 
 interface Event {
     date: string; // yyyy-mm-dd

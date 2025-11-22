@@ -10,7 +10,7 @@ import Subtitle from "../components/UI/Subtitle";
 import Paragraph from "../components/UI/Paragraph";
 import { Event } from "../types/Event";
 import "./Calendar.css";
-import fetchEvents from "../services/eventsService";
+import { fetchEvents } from "../services/eventsService";
 
 interface SubCardProps {
     label: string;

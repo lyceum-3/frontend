@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../../../services/eventsService"
+import { useToast } from "../../../components/UI/Toast";
 
 function EventsAdd() {
     const [name, setName] = React.useState<string>("");
@@ -9,6 +10,7 @@ function EventsAdd() {
     const [note, setNote] = React.useState<string>("");
 
     const nav = useNavigate();
+    const { showToast } = useToast();
 
     async function handleSubmit() {
         if (!name || !date) {
@@ -17,10 +19,10 @@ function EventsAdd() {
         }
         try {
             await createEvent({ name, date, time, note });
-            alert("Event created!");
+            showToast("Event created!", "success");
             nav("/admin/events");
         } catch (error: unknown) {
-            alert(error instanceof Error ? error.message : error);
+            showToast(`${error instanceof Error ? error.message : error}`, "error");
         }
     }
 

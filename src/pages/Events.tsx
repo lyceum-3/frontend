@@ -67,33 +67,40 @@ function Events() {
 
     return (
         <Card>
-            <Title title="Календар подій" />
-            <div style={{display: "flex", justifyContent: "center"}}>
-                <Calendar
-                    value={value}
-                    onChange={(date) => setValue(date as Date)}
-                    className="custom-calendar"
-                />
-            </div>
-            <div style={{textAlign:"center", marginTop: "30px"}}>
-                <Subtitle>Події на {formatDate(value)}</Subtitle>
-            </div>
-            {loading ? (
-                <div style={{textAlign: "center"}}>
-                    <Paragraph>Завантаження...</Paragraph>
+            <header style={{textAlign: "center"}}>
+                <Title title="Календар подій" />
+                <Paragraph>Список подій Березанського ліцею №3</Paragraph>
+            </header>
+            <main>
+                <div style={{display: "flex", justifyContent: "center"}}>
+                    <Calendar
+                        value={value}
+                        onChange={(date) => setValue(date as Date)}
+                        className="custom-calendar"
+                    />
                 </div>
-            ) : todaysEvents.length > 0 ? (
-                <div>
-                    {todaysEvents.map((ev) => (
-                        <EventComponent event={ev} />
-                    ))}
+                <div style={{textAlign:"center", marginTop: "30px"}}>
+                    <Subtitle>Події на {formatDate(value)}</Subtitle>
                 </div>
-            ) : (
-                <div style={{textAlign: "center"}}>
-                    <Paragraph>Подій на цю дату немає 💤</Paragraph>
-                </div>
-            )}
-            <Button text="Home" onClick={() => {nav("/")}} />
+                {loading ? (
+                    <div style={{textAlign: "center"}}>
+                        <Paragraph>Завантаження...</Paragraph>
+                    </div>
+                ) : todaysEvents.length > 0 ? (
+                    <div>
+                        {todaysEvents.map((ev) => (
+                            <EventComponent event={ev} />
+                        ))}
+                    </div>
+                ) : (
+                    <div style={{textAlign: "center"}}>
+                        <Paragraph>Подій на цю дату немає 💤</Paragraph>
+                    </div>
+                )}
+            </main>
+            <nav>
+                <Button text="Home" onClick={() => {nav("/")}} />
+            </nav>
         </Card>
     )
 }

@@ -21,51 +21,55 @@ function EventsView() {
     const nav = useNavigate();
 
     return (
-        <div>
-            <h1>Hello, CRUD!</h1>
-            <button onClick={() => nav("/admin")}>Back</button>
-
+        <>
+            <header>
+                <h1>Hello, CRUD!</h1>
+            </header>
+            <nav>
+                <button onClick={() => nav("/admin")}>Back</button>
+            </nav>
             <hr />
-
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                <>
-                    <button onClick={() => nav("/admin/events/add")}>+ Add event</button>
-                    {events.length === 0 ? (
-                        <p>Поки нічого нема...</p>
-                    ) : (
-                        <table border={1} cellPadding={8}>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                    <th>Time</th>
-                                    <th>Note</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {events.map(ev => (
-                                    <tr key={ev.id}>
-                                        <td>{ev.date}</td>
-                                        <td>{ev.name}</td>
-                                        <td>{ev.time}</td>
-                                        <td>{ev.note}</td>
-                                        <td>
-                                            <button>Edit</button>
-                                            <button>Update</button>
-                                            <button>Delete</button>
-                                        </td>
+            <main>
+                {loading ? (
+                    <div>
+                        <p>Loading...</p>
+                    </div>
+                ) : (
+                    <div>
+                        <button onClick={() => nav("/admin/events/add")}>+ Add event</button>
+                        {events.length === 0 ? (
+                            <p>Поки нічого нема...</p>
+                        ) : (
+                            <table border={1} cellPadding={8}>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Time</th>
+                                        <th>Note</th>
+                                        <th>Actions</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </>
-            )}
-
-        </div>
+                                </thead>
+                                <tbody>
+                                    {events.map(ev => (
+                                        <tr key={ev.id}>
+                                            <td>{ev.date}</td>
+                                            <td>{ev.name}</td>
+                                            <td>{ev.time}</td>
+                                            <td>{ev.note}</td>
+                                            <td>
+                                                <button onClick={() => nav(`/admin/events/update/${ev.id}`)}>Edit</button>
+                                                <button>Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                )}
+            </main>
+        </>
     );
 };
 

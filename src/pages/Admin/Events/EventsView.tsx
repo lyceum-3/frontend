@@ -2,21 +2,24 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchEvents } from "../../../services/eventsService";
 import { Event } from "../../../types/Event";
+import { useToast } from "../../../components/UI/Toast";
 
 function EventsView() {
     const [events, setEvents] = React.useState<Event[]>([]);
     const [loading, setLoading] = React.useState(true);
 
+    const hasFetched = React.useRef(false);
+    const { showToast } = useToast();
+
     React.useEffect(() => {
-        try {
-            fetchEvents()
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+
+        fetchEvents()
             .then(fetched => setEvents(fetched))
-            .catch(error => alert(error instanceof Error ? error.message : error))
-            .finally(() =>setLoading(false));
-        } catch (error: any) {
-            alert(error instanceof Error ? error.message : error);
-        }
-    }, []);
+            .catch(error => showToast(error instanceof Error ? error.message : error, "error"))
+            .finally(() => setLoading(false));
+    }, [showToast]);
 
     const nav = useNavigate();
 

@@ -27,8 +27,12 @@ function Events() {
     const [loading, setLoading] = React.useState(true);
 
     const nav = useNavigate();
+    const hasFetched = React.useRef(false);
 
     React.useEffect(() => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+
         fetchEvents()
             .then(fetched => setEvents(fetched))
             .catch(error => alert(error instanceof Error ? error.message : error))

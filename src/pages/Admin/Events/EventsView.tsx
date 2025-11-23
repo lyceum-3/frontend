@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchEvents } from "../../../services/eventsService";
+import { fetchEvents, deleteEvent } from "../../../services/eventsService";
 import { Event } from "../../../types/Event";
 import { useToast } from "../../../components/UI/Toast";
 
@@ -20,6 +20,16 @@ function EventsView() {
             .catch(error => showToast(error instanceof Error ? error.message : error, "error"))
             .finally(() => setLoading(false));
     }, [showToast]);
+
+    async function handleDelete(id: number) {
+        try {
+            await deleteEvent(id);
+            showToast("Подію видалено успішно!", "success");
+            setEvents(events.filter(ev => ev.id !== id));
+        } catch (error: unknown) {
+            showToast(error instanceof Error ? error.message : String(error), "error");
+        }
+    }
 
     const nav = useNavigate();
 
@@ -62,7 +72,7 @@ function EventsView() {
                                             <td>{ev.note}</td>
                                             <td>
                                                 <button onClick={() => nav(`/admin/events/update/${ev.id}`)}>Edit</button>
-                                                <button>Delete</button>
+                                                <button onClick={() => handleDelete(ev.id || -1)}>Delete</button>
                                             </td>
                                         </tr>
                                     ))}

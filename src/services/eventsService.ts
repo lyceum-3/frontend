@@ -10,7 +10,7 @@ export async function fetchEvents(): Promise<Event[]> {
     }
 }
 
-export async function fetchEvent(id: number): Promise<Event> {
+export async function fetchEventById(id: number): Promise<Event> {
     try {
         return (await httpClient.get<Event>(`/api/events/${id}`)).data;
     } catch (error: any) {

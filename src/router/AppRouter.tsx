@@ -7,6 +7,7 @@ import Events from "../pages/Events";
 import ProtectedRoute from "./ProtectedRoute";
 import EventsView from "../pages/Admin/Events/EventsView";
 import EventsAdd from "../pages/Admin/Events/EventsAdd";
+import EventsUpdate from "../pages/Admin/Events/EventsUpdate";
 
 const AppRouter = () => {
     return (
@@ -28,6 +29,11 @@ const AppRouter = () => {
                 <Route path="/admin/events/add" element={
                     <ProtectedRoute>
                         <EventsAdd />
+                    </ProtectedRoute>
+                } />
+                <Route path="/admin/events/update/:id" element={
+                    <ProtectedRoute>
+                        <EventsUpdate />
                     </ProtectedRoute>
                 } />
                 <Route path="/events" element={<Events />}></Route>

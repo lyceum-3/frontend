@@ -11,6 +11,7 @@ import Paragraph from "../components/UI/Paragraph";
 import { Event } from "../types/Event";
 import "./Calendar.css";
 import { fetchEvents } from "../services/eventsService";
+import { useToast } from "../components/UI/Toast";
 
 interface SubCardProps {
     label: string;
@@ -28,6 +29,7 @@ function Events() {
 
     const nav = useNavigate();
     const hasFetched = React.useRef(false);
+    const { showToast } = useToast();
 
     React.useEffect(() => {
         if (hasFetched.current) return;
@@ -35,9 +37,9 @@ function Events() {
 
         fetchEvents()
             .then(fetched => setEvents(fetched))
-            .catch(error => alert(error instanceof Error ? error.message : error))
+            .catch(error => showToast(error instanceof Error ? error.message : error, "error"))
             .finally(() => setLoading(false));
-    }, []);
+    }, [showToast]);
 
     const formatDate = (date: Date) => {
         const year = date.getFullYear();

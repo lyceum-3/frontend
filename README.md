@@ -60,4 +60,4 @@ npm start
 
 ## Ліцензія
 
-Проект розповсюджується під **MIT License**.
+Проект розповсюджується під **[MIT License](https://opensource.org/license/mit)**.

@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import EventsView from "../pages/Admin/Events/EventsView";
 import EventsAdd from "../pages/Admin/Events/EventsAdd";
 import EventsUpdate from "../pages/Admin/Events/EventsUpdate";
+import NotFound from "../pages/NotFound";
 
 const AppRouter = () => {
     return (
@@ -16,27 +17,16 @@ const AppRouter = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/schedule" element={<Schedule />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/admin" element={
-                    <ProtectedRoute>
-                        <AdminDashboard />
-                    </ProtectedRoute>
-                } />
-                <Route path="/admin/events" element={
-                    <ProtectedRoute>
-                        <EventsView />
-                    </ProtectedRoute>
-                } />
-                <Route path="/admin/events/add" element={
-                    <ProtectedRoute>
-                        <EventsAdd />
-                    </ProtectedRoute>
-                } />
-                <Route path="/admin/events/update/:id" element={
-                    <ProtectedRoute>
-                        <EventsUpdate />
-                    </ProtectedRoute>
-                } />
-                <Route path="/events" element={<Events />}></Route>
+                <Route path="/events" element={<Events />} />
+
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/admin/" element={<AdminDashboard />} />
+                    <Route path="/admin/events" element={<EventsView />} />
+                    <Route path="/admin/events/add" element={<EventsAdd />} />
+                    <Route path="/admin/events/update/:id" element={<EventsUpdate />} />
+                </Route>
+
+                <Route path="*" element={<NotFound />}/>
             </Routes>
         </BrowserRouter>
     );

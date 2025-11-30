@@ -1,5 +1,8 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import Card from "../../components/UI/Card";
+import Button from "../../components/UI/Button";
+import Title from "../../components/UI/Title";
 
 function AdminDashboard() {
     const nav = useNavigate();
@@ -14,16 +17,19 @@ function AdminDashboard() {
     };
 
     return (
-        <>
+        <Card>
             <header>
-                <h1>Hello, Admin</h1>
+                <Title title="Hello, Admin" />
             </header>
             <nav>
-                <button onClick={() => nav("/")}>Home</button>
-                <button onClick={handleLogOut}>Log out</button>
-                <button onClick={() => nav("/admin/events")}>Керувати подіями</button>
+                <Button text="Home" onClick={() => nav("/")} />
             </nav>
-        </>
+            <main>
+
+                <Button text="Log out" onClick={() => handleLogOut} />
+                <Button text="Керувати подіями" onClick={() => nav("/admin/events")} />
+            </main>
+        </Card>
     );
 };
 

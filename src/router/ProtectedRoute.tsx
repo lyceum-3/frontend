@@ -1,14 +1,8 @@
-import { Navigate } from "react-router-dom";
-import { JSX } from "react";
+import {  Navigate, Outlet } from "react-router-dom";
 
-function ProtectedRoute({ children }: {children:  JSX.Element}) {
+function ProtectedRoute() {
     const token = localStorage.getItem("authToken");
-
-    if (!token) {
-        return <Navigate to="/login" />
-    }
-
-    return children;
+    return token ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default ProtectedRoute;

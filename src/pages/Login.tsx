@@ -5,7 +5,7 @@ import Card from "../components/UI/Card";
 import Button from "../components/UI/Button";
 import Label from "../components/UI/Label";
 import Input from "../components/UI/Input";
-import loginRequest from "../services/Auth";
+import loginRequest from "../services/authService";
 import {LoginRequest} from "../types/LoginRequest";
 
 function Login() {

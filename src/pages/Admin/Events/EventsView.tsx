@@ -3,6 +3,44 @@ import { useNavigate } from "react-router-dom";
 import { fetchEvents, deleteEvent } from "../../../services/eventsService";
 import { Event } from "../../../types/Event";
 import { useToast } from "../../../components/UI/Toast";
+import Card from "../../../components/UI/Card";
+import Title from "../../../components/UI/Title";
+import Button from "../../../components/UI/Button";
+import Paragraph from "../../../components/UI/Paragraph";
+
+interface EventRowProps {
+    event: Event;
+    onEdit: (id: number) => void;
+    onDelete: (id: number) => void;
+};
+
+const EventRow: React.FC<EventRowProps> = ({ event, onEdit, onDelete }) => {
+    return (
+        <tr key={event.id}>
+            <td style={{ padding: "6px 6px" }}>{event.date}</td>
+            <td style={{ padding: "6px 6px" }}>{event.name}</td>
+            <td style={{ padding: "6px 6px" }}>{event.time}</td>
+            <td style={{ padding: "6px 6px" }}>{event.note}</td>
+            <td style={{ padding: "6px 6px" }}>
+                <div style={{ display: "flex", gap: "8px" }}>
+                    <button
+                        style={{ padding: "8px 12px", border: "1px solid #4f46e5", borderRadius: "8px", background: "white", color: "#4f46e5", cursor: "pointer" }}
+                        onClick={() => onEdit(event.id || -1)}
+                    >
+                        Редагувати
+                    </button>
+                    <button
+                        style={{ padding: "8px 12px", border: "1px solid #4f46e5", borderRadius: "8px", background: "white", color: "#4f46e5", cursor: "pointer" }}
+                        onClick={() => onDelete(event.id || -1)}
+                    >
+                        Видалити
+                    </button>
+                    
+                </div>
+            </td>
+        </tr>        
+    );
+};
 
 function EventsView() {
     const [events, setEvents] = React.useState<Event[]>([]);
@@ -22,6 +60,10 @@ function EventsView() {
     }, [showToast]);
 
     async function handleDelete(id: number) {
+        if (id === -1) {
+            showToast("Помилка: Недійсний ID події", "error");
+            return;
+        }
         try {
             await deleteEvent(id);
             showToast("Подію видалено успішно!", "success");
@@ -31,58 +73,69 @@ function EventsView() {
         }
     }
 
+    const handleEdit = (id: number) => {
+        nav(`/admin/events/update/${id}`);
+    }
+
+    const handleAdd = () => {
+        nav("/admin/events/add");
+    }
+
     const nav = useNavigate();
 
     return (
-        <>
+        <Card margin="20px auto" width="90%" padding="20px">
             <header>
-                <h1>Hello, CRUD!</h1>
+                <Title title="Управління подіями" />
+                <hr style={{ border: "none", borderTop: "1px solid #e5e7eb", margin: "15px 0" }} />
             </header>
-            <nav>
-                <button onClick={() => nav("/admin")}>Back</button>
+            <nav style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
+                <Button text="Назад до адмінки" onClick={() => nav("/admin")} />
+                <Button text="Додати подію" onClick={handleAdd} />
             </nav>
-            <hr />
             <main>
                 {loading ? (
-                    <div>
-                        <p>Loading...</p>
-                    </div>
+                    <Paragraph>Завантаження...</Paragraph>
                 ) : (
-                    <div>
-                        <button onClick={() => nav("/admin/events/add")}>+ Add event</button>
+                    <div style={{ overflowX: "auto" }}>
                         {events.length === 0 ? (
-                            <p>Поки нічого нема...</p>
+                            <Paragraph>Поки нічого нема...</Paragraph>
                         ) : (
-                            <table border={1} cellPadding={8}>
-                                <thead>
+                            <table
+                                style={{
+                                    width: "100%",
+                                    borderCollapse: "collapse",
+                                    textAlign: "left",
+                                    borderRadius: "10px",
+                                    overflow: "hidden",
+                                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)"
+                                }}
+                            >
+                                <thead style={{ backgroundColor: "#4f46e5", color: "white" }}>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Name</th>
-                                        <th>Time</th>
-                                        <th>Note</th>
-                                        <th>Actions</th>
+                                        <th style={{ padding: "12px 15px" }}>Date</th>
+                                        <th style={{ padding: "12px 15px" }}>Name</th>
+                                        <th style={{ padding: "12px 15px" }}>Time</th>
+                                        <th style={{ padding: "12px 15px" }}>Note</th>
+                                        <th style={{ padding: "12px 15px", width: "150px" }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {events.map(ev => (
-                                        <tr key={ev.id}>
-                                            <td>{ev.date}</td>
-                                            <td>{ev.name}</td>
-                                            <td>{ev.time}</td>
-                                            <td>{ev.note}</td>
-                                            <td>
-                                                <button onClick={() => nav(`/admin/events/update/${ev.id}`)}>Edit</button>
-                                                <button onClick={() => handleDelete(ev.id || -1)}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                        <EventRow 
+                                            key={ev.id}
+                                            event={ev}
+                                            onEdit={handleEdit}
+                                            onDelete={handleDelete}
+                                        />
+                                    ))};
                                 </tbody>
                             </table>
-                        )}
+                        )};
                     </div>
-                )}
+                )};
             </main>
-        </>
+        </Card>
     );
 };
 

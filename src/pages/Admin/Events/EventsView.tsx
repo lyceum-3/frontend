@@ -7,6 +7,7 @@ import Card from "../../../components/UI/Card";
 import Title from "../../../components/UI/Title";
 import Button from "../../../components/UI/Button";
 import Paragraph from "../../../components/UI/Paragraph";
+import Separator from "../../../components/UI/Separator";
 
 interface EventRowProps {
     event: Event;
@@ -87,7 +88,7 @@ function EventsView() {
         <Card margin="20px auto" width="90%" padding="20px">
             <header>
                 <Title title="Управління подіями" />
-                <hr style={{ border: "none", borderTop: "1px solid #e5e7eb", margin: "15px 0" }} />
+                <Separator />
             </header>
             <nav style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
                 <Button text="Назад до адмінки" onClick={() => nav("/admin")} />
@@ -128,12 +129,12 @@ function EventsView() {
                                             onEdit={handleEdit}
                                             onDelete={handleDelete}
                                         />
-                                    ))};
+                                    ))}
                                 </tbody>
                             </table>
-                        )};
+                        )}
                     </div>
-                )};
+                )}
             </main>
         </Card>
     );
